@@ -24,7 +24,7 @@ import {
   deleteProject,
   getUserProjects,
   toggleLike as toggleProjectStatus
-} from '../controllers/projectcontroller.js';
+} from '../controllers/projectController.js';
 
  
 import  protect  from '../middlewares/authMiddleware.js';
