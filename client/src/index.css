@@ -1,6 +1,36 @@
- @import "tailwindcss";
+@import "tailwindcss";
 
 /* Optional body theming */
 /* body {
   @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-white;
 } */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-shadow: var(--shadow);
+}
+
+:root {
+  --background: white;
+  --foreground: black;
+  --primary: #1a73e8; /* Example primary color */
+  --secondary: #fbbc05; /* Example secondary color */
+  --accent: #34a853; /* Example accent color */
+  --border: #e0e0e0; /* Example border color */
+  --shadow: rgba(0, 0, 0, 0.1); /* Example shadow color */
+
+  & > .dark {
+    --background: black; /* Dark mode background */
+    --foreground: white; /* Dark mode background */
+    --primary: #bb86fc; /* Dark mode primary color */
+    --secondary: #03dac6; /* Dark mode secondary color */
+    --accent: #03dac5; /* Dark mode accent color */
+    --border: #333; /* Dark mode border color */
+    --shadow: rgba(0, 0, 0, 0.5); /* Dark mode shadow color */
+  }
+}

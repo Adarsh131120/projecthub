@@ -57,7 +57,7 @@ app.use(helmet({
 // Rate limiters
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 10000,
   message: { error: 'Too many requests from this IP, please try again later.' },
   standardHeaders: true,
   legacyHeaders: false,
@@ -65,7 +65,7 @@ const limiter = rateLimit({
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: process.env.NODE_ENV === 'production' ? 5 : 1000,
   message: { error: 'Too many authentication attempts, please try again later.' },
   standardHeaders: true,
   legacyHeaders: false,
@@ -85,7 +85,7 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:5173',
       'http://localhost:3000',
-      'http://127.0.0.1:3000',
+      'http://127.0.0.1:5174',
       process.env.FRONTEND_URL
     ].filter(Boolean);
     if (allowedOrigins.includes(origin)) {
@@ -98,6 +98,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  // allowedHeaders : '*'
 };
 app.use(cors(corsOptions));
 
@@ -115,7 +116,20 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.use('/api/auth', authLimiter, authRoutes);
+if(process.env.NODE_ENV === 'production'){
+  app.use('/api/auth', authLimiter, authRoutes);
+}else{
+  app.use('/api/auth', authRoutes);
+}
+  
+  
+    
+
+
+
+
+
+// app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/projects', projectRoutes);
 
 // Serve static frontend
