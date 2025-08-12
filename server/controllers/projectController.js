@@ -1,6 +1,6 @@
 // controllers/projectController.js
-import Project from '../models/Project.js';
-import User from '../models/User.js';
+import Project from '../models/project.js';
+import User from '../models/user.js';
 import cloudinary from '../config/cloudinary.js';
 import { validationResult } from 'express-validator';
 
